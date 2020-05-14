@@ -32,7 +32,7 @@ export default function Game() {
       case 1:
         return "hot";
       case 2:
-        return "worm";
+        return "warm";
       default:
         return "cold";
     }
@@ -44,6 +44,10 @@ export default function Game() {
     setInputNumber("");
   }
 
+  /**
+   * what function does
+   * @param {*} message 
+   */
   function closeWindowOrRestart(message) {
     if (window.confirm(message)) {
       window.close();
@@ -52,6 +56,9 @@ export default function Game() {
     }
   }
 
+  /**
+   * 
+   */
   function addToGuessArray() {
     let obj = {};
     setInputNumber("");
@@ -73,7 +80,7 @@ export default function Game() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (Number(inputNumber) === Number(randomNumber)) {
+    if (+inputNumber === +randomNumber) {
       closeWindowOrRestart(
         `Right! You have guessed the right number. Close the window?`
       );
@@ -98,7 +105,12 @@ export default function Game() {
       <form onSubmit={handleSubmit}>
         <label>
           Guess The Number
-          <input type="number" value={inputNumber} onChange={handleChange} />
+          <input
+            type="number"
+            placeholder="Enter a number"
+            value={inputNumber}
+            onChange={handleChange}
+          />
         </label>
         <input type="submit" value="Guess It!" />
       </form>

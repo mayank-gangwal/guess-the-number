@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CreateGuessTable(props) {
   return (
-    <div>
+    <div id="CreateGuessTable">
       <hr />
       {props.guesses.map(row => (
         <div key={row.numberOfGuess}>
