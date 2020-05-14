@@ -12,7 +12,10 @@ export default function Game() {
   const [inputNumber, setInputNumber] = useState("");
   const [guess, setGuess] = useState([]);
 
-  //only trigger reload when randomNumber changes
+  /**
+   * Only trigger reload when randomNumber changes/ initial rendering
+   * Sets {randomNumber} state
+   */
   useEffect(
     () => {
       setrandomNumber(randomNumberGenerator(minimum, maximum));
@@ -22,10 +25,17 @@ export default function Game() {
 
   // ========================= utility functions start ========================= //
 
+  /**
+   * Gemerates a random number between @param(min) and @param(max)
+   */
   function randomNumberGenerator(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
+  /**
+   * Generates a temparature to give a hint to, how close the user is to 
+   * randomly generated number. 
+   */
   function generateTemparature() {
     let differenceInNumbers = Math.abs(randomNumber - inputNumber);
     switch (differenceInNumbers) {
@@ -38,6 +48,9 @@ export default function Game() {
     }
   }
 
+  /**
+   * Restarts the Game, setting all the states to initial values
+   */
   function restartGame() {
     setrandomNumber("");
     setGuess([]);
@@ -45,8 +58,10 @@ export default function Game() {
   }
 
   /**
-   * what function does
-   * @param {*} message 
+   * Alerts user and giving option either to exit game or restart.
+   * Displays @param(message) in alert box.
+   * OK - close the game window, exit!
+   * CANCEL - restart the game
    */
   function closeWindowOrRestart(message) {
     if (window.confirm(message)) {
@@ -57,7 +72,8 @@ export default function Game() {
   }
 
   /**
-   * 
+   * Creating an object of array, which would then be passed as a prop
+   * to CreateGuessTable, which would generate a table based on this input prop
    */
   function addToGuessArray() {
     let obj = {};
@@ -70,6 +86,11 @@ export default function Game() {
 
   // ========================= utility functions end ========================= //
 
+  // ========================= event handling functions start ========================= //
+
+  /**
+   * Instantly prompts user if the number is greater than {maximum}
+   */
   function handleChange(event) {
     if (event.target.value >= maximum) {
       alert(`Invalid number. Please enter number less than ${maximum}`);
@@ -78,6 +99,11 @@ export default function Game() {
     }
   }
 
+  /**
+   * Alerts if user guessed the right number.
+   * Alerts if user guessed the wrong number {numberOfAttemptsAllowed} times
+   * Adds to {Guess} state array if the user guessed wrong number less than {numberOfAttemptsAllowed} times
+   */
   function handleSubmit(event) {
     event.preventDefault();
     if (+inputNumber === +randomNumber) {
@@ -94,6 +120,8 @@ export default function Game() {
       }
     }
   }
+
+  // ========================= event handling functions end ========================= //
 
   return (
     <React.Fragment>

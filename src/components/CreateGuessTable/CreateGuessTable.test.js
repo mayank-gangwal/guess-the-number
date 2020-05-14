@@ -1,33 +1,26 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
-// import { act } from "react-dom/test-utils";
-// import CreateGuessTable from "./CreateGuessTable";
-
-// let container;
-
-// beforeEach(() => {
-//   container = document.getElementById("CreateGuessTable");
-//   document.body.appendChild(container);
-// });
-
-// afterEach(() => {
-//   //document.body.removeChild(container);
-//   //container = null;
-// });
-
-// it("can render and update a table", () => {
-//   // Test first render and componentDidMount
-//   act(() => {
-//     ReactDOM.render(<CreateGuessTable />, container);
-//   });
-
-//   // Test second render and componentDidUpdate
-//   //act(() => {});
-// });
+import React from "react";
+import { shallow } from "enzyme";
+import CreateGuessTable from "./CreateGuessTable";
+import { create } from "react-test-renderer";
 
 describe("Examining the syntax of Jest tests", () => {
-  it("sums numbers", () => {
-    expect(1 + 2).toEqual(3);
-    expect(2 + 2).toEqual(4);
+  const initialProp = [{
+    numberOfGuess: 1,
+    guessedNumber: 5,
+    temperature: 'hot'
+  }];
+  const wrapper = shallow(<CreateGuessTable guesses={initialProp} />)
+
+  it("should render without crashing", () => {
+    shallow(<CreateGuessTable guesses={initialProp} />);
+  });
+
+  it("should match the snapshot", () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it("should show table text as expected", () => {
+    const description = wrapper.find("div").at(1);
+    expect(description.text()).toBe("Guess #1. You guessed number 5 -  hot");
   });
 });
